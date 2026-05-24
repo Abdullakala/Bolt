@@ -13,6 +13,11 @@ dotenv.config();
 
 export default defineConfig((config) => {
   return {
+    resolve: {
+      alias: {
+        'fast-deep-equal': 'fast-deep-equal/es6',
+      },
+    },
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     },
@@ -66,9 +71,6 @@ export default defineConfig((config) => {
       'TOGETHER_API_BASE_URL',
     ],
     optimizeDeps: {
-      include: [
-        'fast-deep-equal'
-      ],
       exclude: [
         '@xterm/xterm',
         '@xterm/addon-fit',
@@ -78,13 +80,6 @@ export default defineConfig((config) => {
         'jspdf',
         'shiki'
       ],
-      esbuildOptions: {
-        mainFields: ['module', 'main'],
-        resolveExtensions: ['.js', '.ts', '.tsx', '.jsx'],
-      }
-    },
-    ssr: {
-      noExternal: ['fast-deep-equal']
     },
     css: {
       preprocessorOptions: {
