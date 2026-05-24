@@ -77,7 +77,14 @@ export default defineConfig((config) => {
         'react-dnd-html5-backend',
         'jspdf',
         'shiki'
-      ]
+      ],
+      esbuildOptions: {
+        mainFields: ['module', 'main'],
+        resolveExtensions: ['.js', '.ts', '.tsx', '.jsx'],
+      }
+    },
+    ssr: {
+      noExternal: ['fast-deep-equal']
     },
     css: {
       preprocessorOptions: {
