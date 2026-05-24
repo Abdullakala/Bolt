@@ -66,6 +66,9 @@ export default defineConfig((config) => {
       'TOGETHER_API_BASE_URL',
     ],
     optimizeDeps: {
+      include: [
+        'fast-deep-equal'
+      ],
       exclude: [
         '@xterm/xterm',
         '@xterm/addon-fit',
