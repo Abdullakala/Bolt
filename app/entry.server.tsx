@@ -1,11 +1,12 @@
-import type { AppLoadContext } from '@remix-run/node';
+import type { AppLoadContext, EntryContext } from '@remix-run/node';
+import { createReadableStreamFromReadable } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
 import { isbot } from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
 import { renderHeadToString } from 'remix-island';
 import { Head } from './root';
 import { themeStore } from '~/lib/stores/theme';
-import { PassThrough } from 'node:stream';
+import { PassThrough } from 'stream';
 
 const ABORT_DELAY = 5_000;
 
@@ -13,7 +14,7 @@ export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: any,
+  remixContext: EntryContext,
   _loadContext: AppLoadContext,
 ) {
   const prohibitOutOfOrderStreaming = isbot(request.headers.get('user-agent') || '');
@@ -94,24 +95,5 @@ export default async function handleRequest(
     );
 
     setTimeout(abort, ABORT_DELAY);
-  });
-}
-
-function createReadableStreamFromReadable(readable: PassThrough): ReadableStream {
-  return new ReadableStream({
-    start(controller) {
-      readable.on('data', (chunk) => {
-        controller.enqueue(typeof chunk === 'string' ? new TextEncoder().encode(chunk) : chunk);
-      });
-      readable.on('end', () => {
-        controller.close();
-      });
-      readable.on('error', (err) => {
-        controller.error(err);
-      });
-    },
-    cancel() {
-      readable.destroy();
-    },
   });
 }

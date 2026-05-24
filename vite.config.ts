@@ -80,6 +80,10 @@ export default defineConfig((config) => {
         'shiki'
       ],
     },
+    ssr: {
+      noExternal: ['@remix-run/node'],
+      external: ['stream', 'crypto', 'fs', 'path', 'os', 'child_process'],
+    },
     css: {
       preprocessorOptions: {
         scss: {
