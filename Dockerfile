@@ -57,8 +57,9 @@ ENV WRANGLER_SEND_METRICS=false \
 # Note: API keys should be provided at runtime via docker run -e or docker-compose
 # Example: docker run -e OPENAI_API_KEY=your_key_here ...
 
-# Install curl for healthchecks and copy bindings script
+# Install curl for healthchecks and Wrangler for runtime startup
 RUN apt-get update && apt-get install -y --no-install-recommends curl \
+  && npm install -g wrangler@4.44.0 \
   && rm -rf /var/lib/apt/lists/*
 
 # Copy built files and scripts
