@@ -65,6 +65,17 @@ export default defineConfig((config) => {
       'LMSTUDIO_API_BASE_URL',
       'TOGETHER_API_BASE_URL',
     ],
+    optimizeDeps: {
+      exclude: [
+        '@xterm/xterm',
+        '@xterm/addon-fit',
+        '@xterm/addon-web-links',
+        'react-dnd',
+        'react-dnd-html5-backend',
+        'jspdf',
+        'shiki'
+      ]
+    },
     css: {
       preprocessorOptions: {
         scss: {
